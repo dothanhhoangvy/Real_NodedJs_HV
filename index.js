@@ -21,6 +21,6 @@ app.use("/users", authRoutes);
 
 
 app.listen(port, () => {
-    console.log("Connected on port 5000");
+    console.log(`Connected on port: ${port}`);
   });
   
