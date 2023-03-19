@@ -1,4 +1,4 @@
 module.exports = {
-    key: "CapStone",
+    key: "capstone",
   };
   
