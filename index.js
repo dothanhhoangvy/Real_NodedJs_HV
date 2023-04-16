@@ -11,9 +11,9 @@ app.use(cookieParser());
 
 
 data = {
-    msg: "Welcome ",
-    info: "This is a root endpoint",
-    Working: "Documentations of other endpoints will be release soon :)",
+    msg: "Welcome",
+    info: "This is a server for final project of Hoang Vy",
+    Working: "If you have any question, you can contact to me via my phone number 0708208055 (Hoang Vy)",
   };
 
 app.route("/").get((req, res) => res.json(data));

@@ -121,6 +121,14 @@ router.route("/logout").post((req, res)=>{
     }).status(200).json("User has been logged out.")
   });
 
+router.route("/location").get(middleware.checkToken, (req, res) => {
+    const q = "SELECT * FROM Login_web WHERE username = ?";
+    pool.query({ username: req.decoded.username }, (err, result) => {
+      if (err) return res.json({ err: err });
+      if (result == null) return res.json({ data: [] });
+      else return res.json({ data: result });
+    });
+  });
 
 
 module.exports = router; 
