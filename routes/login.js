@@ -8,7 +8,7 @@ const router = express.Router();
 
 router.route("/:username").get(middleware.checkToken, (req, res) => {
 
-  const q = "SELECT * FROM Login_web WHERE username = ?";
+  const q = "SELECT * FROM Login_user WHERE username = ?";
 
   pool.query(q,{ username: req.params.username }, (err, data) => {
     if (err) return res.status(500).json(err);
@@ -35,7 +35,7 @@ router.route("/:username").get(middleware.checkToken, (req, res) => {
 
 router.route("/register").post((req, res) => {
     //CHECK EXISTING USER
-    const q = "SELECT * FROM Login_web WHERE username = ?";
+    const q = "SELECT * FROM Login_user WHERE username = ?";
   
     pool.query(q, [req.body.username], (err, data) => {
       if (err) return res.status(500).json(err);
@@ -45,7 +45,7 @@ router.route("/register").post((req, res) => {
       const salt = bcrypt.genSaltSync(10);
       const hash = bcrypt.hashSync(req.body.password, salt);
   
-      const q = "INSERT INTO Login_web(`username`,`password`) VALUES (?)";
+      const q = "INSERT INTO Login_user(`username`,`password`) VALUES (?)";
       const values = [req.body.username, hash];
   
       pool.query(q, [values], (err, data) => {
@@ -57,7 +57,7 @@ router.route("/register").post((req, res) => {
 router.route("/login").post((req, res) => {
     //CHECK USER
   
-    const q = "SELECT * FROM Login_web WHERE username = ?";
+    const q = "SELECT * FROM Login_user WHERE username = ?";
   
     pool.query(q, [req.body.username], (err, data) => {
       if (err) return res.status(500).json(err);
@@ -87,7 +87,7 @@ router.route("/login").post((req, res) => {
 router.route("/update/:username").patch((req, res) => {
   const salt = bcrypt.genSaltSync(10);
   const hash = bcrypt.hashSync(req.body.password, salt);
-  const q = " UPDATE Login_web SET password = ? WHERE username = ?";
+  const q = " UPDATE Login_user SET password = ? WHERE username = ?";
   const values = [hash];
   pool.query(q, [values,req.body.username ],
     (err, data) => {
@@ -102,7 +102,7 @@ router.route("/update/:username").patch((req, res) => {
 });
 
 router.route("/delete/:username").delete(middleware.checkToken, (req, res) => {
-  const q = "DELETE from Login_web WHERE id = ?";
+  const q = "DELETE from Login_user WHERE id = ?";
   pool.query(q,[req.params.username], (err, data) => {
     if (err) return res.status(500).json({ msg: err });
     const msg = {
@@ -122,7 +122,7 @@ router.route("/logout").post((req, res)=>{
   });
 
 router.route("/location").get(middleware.checkToken, (req, res) => {
-    const q = "SELECT * FROM Login_web WHERE username = ?";
+    const q = "SELECT * FROM Login_user WHERE username = ?";
     pool.query({ username: req.decoded.username }, (err, result) => {
       if (err) return res.json({ err: err });
       if (result == null) return res.json({ data: [] });
