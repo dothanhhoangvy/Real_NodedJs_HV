@@ -2,7 +2,8 @@ const express = require("express");
 const multer  = require("multer");
 const cookieParser  = require("cookie-parser");
 const authRoutes = require ("./routes/login");
-
+const dataROutes = require ("./routes/data");
+const pool = require("./databasephp")
 const port = process.env.PORT;
 const app = express();
 
@@ -18,7 +19,14 @@ data = {
 
 app.route("/").get((req, res) => res.json(data));
 app.use("/users", authRoutes);
+app.use("/data", dataROutes);
+// app.get('/location', (req, res) => {
+//   pool.query("SELECT DISTINCT latitude, longitude FROM location;", (err, results, fields) => {
+//     if(err) throw err;
+//      res.json(results[0]);
 
+//   });
+// });
 
 app.listen(port, () => {
     console.log(`Connected on port: ${port}`);

@@ -19,6 +19,29 @@ router.route("/:username").get(middleware.checkToken, (req, res) => {
   });
 });
 
+
+router.route("/location").get((req, res) => {
+  const q = "SELECT DISTINCT latitude, longitude FROM location;";
+  pool.query(q, function (err, data) {
+    if(err) throw err;
+    return res.json(data[0]);
+  })
+})
+
+// router.route("/location").get(middleware.checkToken, (req, res) => {
+
+//   const q = "SELECT * FROM location";
+
+//   pool.query(q, (err, data) => {
+//     if (err) return res.status(500).json(err);
+//     return res.json({
+//       data: data,
+//     });
+//   });
+// });
+
+
+
 // router.route("/checkusername/:username").get((req, res) => {
 //   User.findOne({ username: req.params.username }, (err, result) => {
 //     if (err) return res.status(500).json({ msg: err });
