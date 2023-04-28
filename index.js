@@ -6,10 +6,10 @@ const dataROutes = require ("./routes/data");
 const pool = require("./databasephp")
 const port = process.env.PORT;
 const app = express();
-
+const cors = require("cors");
 app.use(express.json());
 app.use(cookieParser());
-
+app.use(cors());
 
 data = {
     msg: "Welcome",
