@@ -9,13 +9,8 @@ const router = express.Router();
 router.route("/location").get((req, res) => {
   const q = "SELECT DISTINCT latitude, longitude FROM location;";
   pool.query(q, function (err, data) {
-    if (err) {
-      console.log(err);
-    } else {
-      var data1 = JSON.parse(JSON.stringify(data));
-      console.log(data1);
-      return res.json(data1);
-    }
+    if (err) throw err;
+    return res.json(data[0]);
   });
 });
 
@@ -26,7 +21,6 @@ router.route("/fuel").get((req, res) => {
       console.log(err);
     } else {
       var data1 = JSON.parse(JSON.stringify(data));
-      console.log(data1);
       return res.json(data1);
     }
   });
@@ -38,7 +32,6 @@ router.route("/engtmp").get((req, res) => {
       console.log(err);
     } else {
       var data1 = JSON.parse(JSON.stringify(data));
-      console.log(data1);
       return res.json(data1);
     }
   });
@@ -50,7 +43,6 @@ router.route("/speed").get((req, res) => {
       console.log(err);
     } else {
       var data1 = JSON.parse(JSON.stringify(data));
-      console.log(data1);
       return res.json(data1);
     }
   });
